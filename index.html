@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quer sair comigo?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ffe5ec, #ffc2d1);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        #conteudo {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+        }
+
+        h1 {
+            color: #ff477e;
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .botoes {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+            height: 50px;
+            position: relative;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        #btn-sim {
+            background-color: #ff477e;
+            color: white;
+        }
+
+        #btn-sim:hover {
+            transform: scale(1.1);
+        }
+
+        #btn-nao {
+            background-color: #ccc;
+            color: #333;
+            position: absolute;
+        }
+
+        .sucesso {
+            display: none;
+        }
+
+        .sucesso h2 {
+            color: #2a9d8f;
+            margin-bottom: 15px;
+        }
+
+        .sucesso p {
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="conteudo">
+        <div id="tela-pergunta">
+            <h1>Quer sair comigo para um date? ☕✨</h1>
+            <div class="botoes">
+                <button id="btn-sim" onclick="aceitou()">Sim</button>
+                <button id="btn-nao" onmouseover="foge()" onclick="foge()">Não</button>
+            </div>
+        </div>
+
+        <div id="tela-sucesso" class="sucesso">
+            <h2>Ebaaa! 🎉❤️</h2>
+            <p>Sabia que você ia tomar a decisão certa!</p>
+            <p><strong>Te mando os detalhes do lugar e horário jajá! 🥰</strong></p>
+        </div>
+    </div>
+
+    <script>
+        function foge() {
+            const btnNao = document.getElementById('btn-nao');
+            
+            // Limita o botão dentro da área visível da tela, dando uma margem de segurança
+            const larguraJanela = window.innerWidth - 150;
+            const alturaJanela = window.innerHeight - 150;
+            
+            // Gera posições aleatórias
+            const novoX = Math.random() * larguraJanela;
+            const novoY = Math.random() * alturaJanela;
+            
+            // Move o botão para a nova posição absoluta na tela
+            btnNao.style.position = 'fixed';
+            btnNao.style.left = novoX + 'px';
+            btnNao.style.top = novoY + 'px';
+        }
+
+        function aceitou() {
+            document.getElementById('tela-pergunta').style.display = 'none';
+            document.getElementById('tela-sucesso').style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>
