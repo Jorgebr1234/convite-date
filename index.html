@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Quer sair comigo?</title>
-    <!-- Biblioteca de Confetes para o 'Sim' -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         * {
@@ -80,8 +79,7 @@
         #btn-nao {
             background-color: #e0e0e0;
             color: #555;
-            position: absolute;
-            transition: all 0.15s ease-out;
+            transition: transform 0.15s ease-out;
             z-index: 99;
         }
 
@@ -123,18 +121,12 @@
         <div id="tela-sucesso" class="sucesso">
             <h2>Ebaaa! 🎉❤️</h2>
             <p>Sabia que você ia tomar a decisão certa!</p>
-            <p><strong>Te mando os detalhes do lugar e horário agorinha! 🥰</strong></p>
         </div>
     </div>
 
     <script>
         const btnNao = document.getElementById('btn-nao');
-
-        // Centraliza inicialmente o botão "Não" ao lado do "Sim"
-        function posicionarInicial() {
-            btnNao.style.position = 'static';
-        }
-        posicionarInicial();
+        let fugiu = false;
 
         function foge(e) {
             if (e) {
@@ -142,34 +134,33 @@
                 e.stopPropagation();
             }
 
-            // Garante que o botão use posição fixa na tela inteira
-            btnNao.style.position = 'fixed';
+            if (!fugiu) {
+                btnNao.style.position = 'fixed';
+                fugiu = true;
+            }
 
-            const padding = 20; // Margem para o botão não colar na borda
+            const padding = 20;
             const btnWidth = btnNao.offsetWidth;
             const btnHeight = btnNao.offsetHeight;
 
-            // Calcula limites seguros na tela
-            const maxX = window.innerWidth - btnWidth - padding;
-            const maxY = window.innerHeight - btnHeight - padding;
+            const maxX = window.innerWidth - btnWidth - padding * 2;
+            const maxY = window.innerHeight - btnHeight - padding * 2;
 
-            const novoX = Math.max(padding, Math.floor(Math.random() * maxX));
-            const novoY = Math.max(padding, Math.floor(Math.random() * maxY));
+            const novoX = padding + Math.floor(Math.random() * Math.max(1, maxX));
+            const novoY = padding + Math.floor(Math.random() * Math.max(1, maxY));
 
             btnNao.style.left = `${novoX}px`;
             btnNao.style.top = `${novoY}px`;
         }
 
-        // Eventos para Desktop e Mobile (Touch)
-        btnNao.addEventListener('touchstart', foge, { passive: false });
-        btnNao.addEventListener('mouseover', foge);
+        // Só foge no clique / toque (sem fugir ao passar o mouse)
         btnNao.addEventListener('click', foge);
+        btnNao.addEventListener('touchend', foge, { passive: false });
 
         function aceitou() {
             document.getElementById('tela-pergunta').style.display = 'none';
             document.getElementById('tela-sucesso').style.display = 'block';
 
-            // Efeito de confetes
             if (typeof confetti === 'function') {
                 confetti({
                     particleCount: 100,
