@@ -153,7 +153,6 @@
             btnNao.style.top = `${novoY}px`;
         }
 
-        // Só foge no clique / toque (sem fugir ao passar o mouse)
         btnNao.addEventListener('click', foge);
         btnNao.addEventListener('touchend', foge, { passive: false });
 
